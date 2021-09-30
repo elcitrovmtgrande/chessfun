@@ -23,6 +23,7 @@ import io from 'socket.io-client';
 import Board from '@/schema/Board';
 import Pawn from '@/schema/pieces/Pawn';
 import Knight from '@/schema/pieces/Knight';
+import Rook from '@/schema/pieces/Rook';
 
 export default {
   name: 'Game',
@@ -139,6 +140,14 @@ export default {
           coords: { x: 7, y: 1 },
           color: 'black',
         }),
+        new Rook({
+          coords: { x: 1, y: 1 },
+          color: 'black',
+        }),
+        new Rook({
+          coords: { x: 8, y: 1 },
+          color: 'black',
+        }),
       ];
     },
     genWhites() {
@@ -181,6 +190,14 @@ export default {
         }),
         new Knight({
           coords: { x: 7, y: 8 },
+          color: 'white',
+        }),
+        new Rook({
+          coords: { x: 1, y: 8 },
+          color: 'white',
+        }),
+        new Rook({
+          coords: { x: 8, y: 8 },
           color: 'white',
         }),
       ];

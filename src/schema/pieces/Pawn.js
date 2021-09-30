@@ -25,7 +25,7 @@ class Pawn extends Piece {
       } else {
         possibilities.push({ x: this.x, y: this.y + 1 });
       }
-      opponents = boardState.filter((p) => (p.getCoords().x === this.x + 1 && p.getCoords().y === this.y + 1) || (p.getCoords().x === this.x - 1 && p.getCoords().y === this.y + 1));
+      opponents = boardState.filter((p) => (p.getCoords().x === this.x + 1 && p.getCoords().y === this.y + 1 && p.getColor() !== this.color) || (p.getCoords().x === this.x - 1 && p.getCoords().y === this.y + 1 && p.getColor() !== this.color));
       opponentsCoords = opponents ? opponents.map((o) => ({ x: o.getCoords().x, y: o.getCoords().y })) : [];
     } else {
       if (this.y === 7) {
