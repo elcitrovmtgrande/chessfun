@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       board: new Board(),
-      pieces: [...this.genBlacks()],
+      pieces: [...this.genBlacks(), ...this.genWhites()],
       game: null,
       isRoomCreator: false,
       roomId: this.$route.params.roomId,
@@ -52,7 +52,11 @@ export default {
       const pieceOnCase = this.hasPiece(c);
       const isPossibility = this.isPossibility(c);
       if (pieceOnCase) {
-        this.onPiece(pieceOnCase);
+        if (isPossibility) {
+          this.onPossibility(c);
+        } else {
+          this.onPiece(pieceOnCase);
+        }
       } else if (isPossibility) {
         this.onPossibility(c);
       }
@@ -69,14 +73,13 @@ export default {
     },
     onPossibility(coords) {
       console.log('Move asked to:', JSON.stringify(coords));
-      this.selectedPiece.setCoords(coords);
-      this.pieces = this.pieces
-        .map((p) => (p.id === this.selectedPiece.id ? this.selectedPiece : p));
+      const nextPieces = this.selectedPiece.move(this.pieces, coords);
+      this.pieces = nextPieces;
       this.selectedPiece = null;
     },
     hasPiece(c) {
       return this.pieces.find(
-        (p) => p.getCoords().x === c.x && p.getCoords().y === c.y,
+        (p) => p.getCoords().x === c.x && p.getCoords().y === c.y && p.getAlive(),
       );
     },
     isSelected(c) {
@@ -135,6 +138,50 @@ export default {
         new Knight({
           coords: { x: 7, y: 1 },
           color: 'black',
+        }),
+      ];
+    },
+    genWhites() {
+      return [
+        new Pawn({
+          coords: { x: 1, y: 7 },
+          color: 'white',
+        }),
+        new Pawn({
+          coords: { x: 2, y: 7 },
+          color: 'white',
+        }),
+        new Pawn({
+          coords: { x: 3, y: 7 },
+          color: 'white',
+        }),
+        new Pawn({
+          coords: { x: 4, y: 7 },
+          color: 'white',
+        }),
+        new Pawn({
+          coords: { x: 5, y: 7 },
+          color: 'white',
+        }),
+        new Pawn({
+          coords: { x: 6, y: 7 },
+          color: 'white',
+        }),
+        new Pawn({
+          coords: { x: 7, y: 7 },
+          color: 'white',
+        }),
+        new Pawn({
+          coords: { x: 8, y: 7 },
+          color: 'white',
+        }),
+        new Knight({
+          coords: { x: 2, y: 8 },
+          color: 'white',
+        }),
+        new Knight({
+          coords: { x: 7, y: 8 },
+          color: 'white',
         }),
       ];
     },

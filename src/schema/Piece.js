@@ -1,5 +1,7 @@
+/* eslint-disable max-len */
 /* eslint-disable class-methods-use-this */
 import { v4 } from 'uuid';
+import { cloneDeep } from 'lodash';
 
 class Piece {
   constructor({ coords, color }) {
@@ -47,6 +49,20 @@ class Piece {
 
   checkPossibility(p) {
     return p.x <= 8 && p.y <= 8;
+  }
+
+  move(boardState, destination) {
+    let nextState = cloneDeep(boardState);
+    const opponent = boardState.find((p) => p.getCoords().x === destination.x && p.getCoords().y === destination.y);
+    this.setCoords(destination);
+    if (opponent) {
+      // On tue l'adversaire
+      opponent.setAlive(false);
+      nextState = nextState.map((p) => (p.getId() === opponent.getId() ? opponent : p));
+    }
+    // On deplace notre piece
+    nextState = nextState.map((p) => (p.getId() === this.getId() ? this : p));
+    return nextState;
   }
 }
 
